@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Little Journey ❤️</title>
+
+  <!-- Modern font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #ffe3ef, #fff7d6);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      max-width: 420px;
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.16);
+      padding: 16px 16px 18px;
+      text-align: center;
+      animation: cardEnter 0.6s cubic-bezier(.22,.61,.36,1);
+    }
+
+    @keyframes cardEnter {
+      from {
+        transform: translateY(20px) scale(0.97);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin: 4px 0 10px;
+      color: #2b2b2b;
+    }
+
+    p {
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    img {
+      width: 100%;
+      max-height: 38vh;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+      animation: float 3.5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    button {
+      flex: 1 1 auto;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #ff5fa2, #ff8ccf);
+      color: white;
+      box-shadow: 0 10px 22px rgba(255, 95, 162, 0.45);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    button.secondary {
+      background: linear-gradient(135deg, #ffe1ed, #ffd1e6);
+      color: #b4004e;
+      box-shadow: 0 8px 18px rgba(255, 180, 210, 0.45);
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.03);
+      filter: brightness(1.05);
+    }
+
+    button:active {
+      transform: scale(0.98);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+    }
+
+    /* subtle background hearts */
+    .heart {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: #ff7eb3;
+      transform: rotate(45deg);
+      animation: rise 8s linear infinite;
+      opacity: 0.15;
+    }
+    .heart::before,
+    .heart::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: #ff7eb3;
+      border-radius: 50%;
+      position: absolute;
+    }
+    .heart::before { top: -7px; left: 0; }
+    .heart::after { left: -7px; top: 0; }
+
+    @keyframes rise {
+      from { transform: translateY(120vh) rotate(45deg); }
+      to { transform: translateY(-20vh) rotate(45deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart" style="left:10%; animation-delay:0s"></div>
+  <div class="heart" style="left:30%; animation-delay:2s"></div>
+  <div class="heart" style="left:55%; animation-delay:4s"></div>
+  <div class="heart" style="left:75%; animation-delay:1s"></div>
+
+  <div class="card" id="app"></div>
+
+  <script>
+    const steps = {
+      start: {
+        title: "Hey you 🐱",
+        text: "I made a tiny journey for you. Not a click-and-done thing. Ready to begin?",
+        img: "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+        buttons: [
+          { label: "Okay 🥰", next: "warmup" },
+          { label: "I’m curious 😼", next: "warmup" }
+        ]
+      },
+
+      warmup: {
+        title: "Before we continue…",
+        text: "You should know this was made with a lot of thought, smiles, and maybe slight nervousness.",
+        img: "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif",
+        buttons: [
+          { label: "That’s cute", next: "compliment1" },
+          { label: "Go on", next: "compliment1" }
+        ]
+      },
+
+      compliment1: {
+        title: "Quick observation 👀",
+        text: "You have this way of making ordinary moments feel lighter. Ever noticed that?",
+        img: "https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif",
+        buttons: [
+          { label: "Maybe 😌", next: "tease" },
+          { label: "Obviously", next: "tease" }
+        ]
+      },
+
+      tease: {
+        title: "Good answer 😏",
+        text: "Confidence suits you. But don’t get too comfortable yet.",
+        img: "https://media.giphy.com/media/3oriO6qJiXajN0TyDu/giphy.gif",
+        buttons: [
+          { label: "Why not?", next: "choice1" },
+          { label: "I’m ready", next: "choice1" }
+        ]
+      },
+
+      choice1: {
+        title: "Important question 🤔",
+        text: "Are you more cute… or extremely cute?",
+        img: "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
+        buttons: [
+          { label: "Cute", next: "cute" },
+          { label: "Extremely cute", next: "extreme" }
+        ]
+      },
+
+      cute: {
+        title: "Modest, huh 😌",
+        text: "I respect that. But I may slightly disagree.",
+        img: "https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif",
+        buttons: [
+          { label: "Explain", next: "memory" }
+        ]
+      },
+
+      extreme: {
+        title: "Confidence detected 🚨",
+        text: "And honestly? Completely justified.",
+        img: "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+        buttons: [
+          { label: "Naturally", next: "memory" }
+        ]
+      },
+
+      memory: {
+        title: "Tiny confession 💭",
+        text: "Sometimes I replay little moments with you in my head. The random ones. Those are my favorite.",
+        img: "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+        buttons: [
+          { label: "That’s sweet", next: "buildUp" },
+          { label: "You’re cheesy", next: "buildUp" }
+        ]
+      },
+
+      buildUp: {
+        title: "Almost there…",
+        text: "This isn’t about grand gestures. Just something honest.",
+        img: "https://media.giphy.com/media/xTiTnMhJTwNHChdTZS/giphy.gif",
+        buttons: [
+          { label: "Okay", next: "final" }
+        ]
+      },
+
+      final: {
+        title: "One last thing ❤️",
+        text: "No matter which buttons you clicked, this part doesn’t change.",
+        img: "https://media.giphy.com/media/l4KibK3JwaVo0CjDO/giphy.gif",
+        buttons: [
+          { label: "Tell me", next: "love" }
+        ]
+      },
+
+      love: {
+        title: "I love you 💖",
+        text: "In the calm moments. In the chaos. And in all the little in-betweens.",
+        img: "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
+        buttons: [
+          { label: "Replay 🔁", next: "start" }
+        ]
+      }
+    };
+
+    const app = document.getElementById('app');
+
+    function launchConfetti() {
+      const colors = ['#ff5fa2', '#ffd166', '#6ee7b7', '#93c5fd'];
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement('div');
+        confetti.style.position = 'fixed';
+        confetti.style.top = '-10px';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.width = '8px';
+        confetti.style.height = '14px';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.opacity = '0.9';
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        confetti.style.borderRadius = '2px';
+        confetti.style.zIndex = '999';
+        confetti.style.animation = `confettiFall ${3 + Math.random() * 2}s linear forwards`;
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes confettiFall {
+        to {
+          transform: translateY(110vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    function render(stepKey) {
+      const step = steps[stepKey];
+
+      app.innerHTML = `
+        <h1>${step.title}</h1>
+        <img src="${step.img}" alt="cute cat" />
+        <p>${step.text}</p>
+        <div class="buttons">
+          ${step.buttons.map(b => `<button onclick=\"render('${b.next}')\">${b.label}</button>`).join('')}
+        </div>
+      `;
+
+      if (stepKey === 'love') {
+        launchConfetti();
+        app.style.animation = 'cardEnter 0.8s cubic-bezier(.22,.61,.36,1)';
+      }
+    }
+
+    render('start');
+  </script>
+</body>
+</html>
